@@ -8,7 +8,7 @@
 import UIKit
 
 class FeedViewController: UIViewController {
-
+    
     struct Post {
         var title: String
     }
@@ -16,19 +16,19 @@ class FeedViewController: UIViewController {
     let lastPost = Post.init(title: "Пост")
     
     /* let transitionButton: UIButton = {
-    let button = UIButton(type: .system)
-        button.layer.cornerRadius = 12
-        button.clipsToBounds = true
-        button.backgroundColor = .systemMint
-        button.setTitle("Посмотреть пост", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    */
+     let button = UIButton(type: .system)
+     button.layer.cornerRadius = 12
+     button.clipsToBounds = true
+     button.backgroundColor = .systemMint
+     button.setTitle("Посмотреть пост", for: .normal)
+     button.setTitleColor(.black, for: .normal)
+     button.translatesAutoresizingMaskIntoConstraints = false
+     return button
+     }()
+     */
     
     let oneButton: UIButton = {
-    let button = UIButton(type: .system)
+        let button = UIButton(type: .system)
         button.layer.cornerRadius = 12
         button.clipsToBounds = true
         button.backgroundColor = .systemMint
@@ -40,7 +40,7 @@ class FeedViewController: UIViewController {
     }()
     
     let twoButton: UIButton = {
-    let button = UIButton(type: .system)
+        let button = UIButton(type: .system)
         button.layer.cornerRadius = 12
         button.clipsToBounds = true
         button.backgroundColor = .systemMint
@@ -77,11 +77,11 @@ class FeedViewController: UIViewController {
     
     
     private func setupButtons() {
-       let onePositionStackViewContraints = buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        let onePositionStackViewContraints = buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         let twoPositionStackViewContraints = buttonStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         
-        let leadingOneButtonContransit = self.oneButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20)
-        let trailingOneButtonContransit = self.oneButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20)
+        let leadingOneButtonContransit = self.oneButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20) //40
+        let trailingOneButtonContransit = self.oneButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20) //-40
         
         let leadingTwoButtonContransit = self.twoButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20)
         let trailingTwoButtonContransit = self.twoButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20)
@@ -90,12 +90,10 @@ class FeedViewController: UIViewController {
             onePositionStackViewContraints, twoPositionStackViewContraints, leadingOneButtonContransit, trailingOneButtonContransit, leadingTwoButtonContransit, trailingTwoButtonContransit
         ])
     }
-
+    
     @objc private func didTapTransitionButton() {
         let postVC = PostViewController()
         postVC.navigationItem.title = lastPost.title
         self.navigationController?.pushViewController(postVC, animated: true)
     }
-
-
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 class PostViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemTeal
@@ -18,7 +18,7 @@ class PostViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = myButton
     }
     @objc func didTapButton() {
-    let infoVC = InfoViewController()
+        let infoVC = InfoViewController()
         infoVC.modalPresentationStyle = .fullScreen
         self.present(infoVC, animated: true)
     }
