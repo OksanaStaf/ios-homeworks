@@ -8,28 +8,65 @@
 import UIKit
 
 class FeedViewController: UIViewController {
-
+    
     struct Post {
         var title: String
     }
     
     let lastPost = Post.init(title: "Пост")
     
-    let transitionButton: UIButton = {
+    /* let transitionButton: UIButton = {
+     let button = UIButton(type: .system)
+     button.layer.cornerRadius = 12
+     button.clipsToBounds = true
+     button.backgroundColor = .systemMint
+     button.setTitle("Посмотреть пост", for: .normal)
+     button.setTitleColor(.black, for: .normal)
+     button.translatesAutoresizingMaskIntoConstraints = false
+     return button
+     }()
+     */
+    
+    let oneButton: UIButton = {
         let button = UIButton(type: .system)
         button.layer.cornerRadius = 12
         button.clipsToBounds = true
         button.backgroundColor = .systemMint
-        button.setTitle("Посмотреть пост", for: .normal)
+        button.setTitle("Первая кнопка", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(didTapTransitionButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
+    let twoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.layer.cornerRadius = 12
+        button.clipsToBounds = true
+        button.backgroundColor = .systemMint
+        button.setTitle("Вторая кнопка", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(didTapTransitionButton), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var buttonStackView: UIStackView = {
+        let srackView = UIStackView()
+        srackView.axis = .vertical
+        srackView.distribution = .fillEqually //высота кнопок одинаковая
+        srackView.spacing = 10 //зазор между кнопками
+        srackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return srackView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(transitionButton)
-        self.setupButton()
+        self.view.addSubview(buttonStackView)
+        self.buttonStackView.addArrangedSubview(oneButton)
+        self.buttonStackView.addArrangedSubview(twoButton)
+        self.setupButtons()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,12 +75,20 @@ class FeedViewController: UIViewController {
         self.navigationItem.title = "Новостная Лента"
     }
     
-    private func setupButton() {
-        transitionButton.addTarget(self, action: #selector(didTapTransitionButton), for: .touchUpInside)
-        self.transitionButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        self.transitionButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
-        self.transitionButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
-        self.transitionButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    
+    private func setupButtons() {
+        let onePositionStackViewContraints = buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        let twoPositionStackViewContraints = buttonStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        
+        let leadingOneButtonContransit = self.oneButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20) //40
+        let trailingOneButtonContransit = self.oneButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20) //-40
+        
+        let leadingTwoButtonContransit = self.twoButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20)
+        let trailingTwoButtonContransit = self.twoButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20)
+        
+        NSLayoutConstraint.activate([
+            onePositionStackViewContraints, twoPositionStackViewContraints, leadingOneButtonContransit, trailingOneButtonContransit, leadingTwoButtonContransit, trailingTwoButtonContransit
+        ])
     }
     
     @objc private func didTapTransitionButton() {
@@ -51,6 +96,4 @@ class FeedViewController: UIViewController {
         postVC.navigationItem.title = lastPost.title
         self.navigationController?.pushViewController(postVC, animated: true)
     }
-
-
 }

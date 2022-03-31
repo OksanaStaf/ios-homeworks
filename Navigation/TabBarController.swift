@@ -12,23 +12,23 @@ class TabBarController: UITabBarController {
     private enum TabBarItem {
         case newstipe
         case profile
-    
-    var title: String {
-        switch self {
-        case .newstipe:
-            return "Лента"
-        case .profile:
-            return "Профиль"
+        
+        var title: String {
+            switch self {
+            case .newstipe:
+                return "Лента"
+            case .profile:
+                return "Профиль"
+            }
         }
-    }
-    
-    var image: UIImage? {
-        switch self {
-        case .newstipe:
-            return UIImage(systemName: "doc.text.fill")
-        case .profile:
-            return UIImage(systemName: "person.crop.artframe")
-        }
+        
+        var image: UIImage? {
+            switch self {
+            case .newstipe:
+                return UIImage(systemName: "doc.text.fill")
+            case .profile:
+                return UIImage(systemName: "person.crop.artframe")
+            }
         }
     }
     
@@ -44,7 +44,7 @@ class TabBarController: UITabBarController {
             case .newstipe:
                 return UINavigationController(rootViewController: FeedViewController())
             case .profile:
-                return UINavigationController(rootViewController: ProfileViewController())
+                return UINavigationController(rootViewController: LogInViewController()) //поменяли на др страничку вместо Profile
             }
         })
         
