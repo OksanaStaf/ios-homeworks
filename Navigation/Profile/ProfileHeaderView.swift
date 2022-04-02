@@ -58,9 +58,9 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         textField.textAlignment = .center
         textField.clearButtonMode = .whileEditing
         textField.clearButtonMode = .unlessEditing
+        textField.clearButtonMode = .always
         let leftView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 20.0, height: 2.0))
         textField.leftView = leftView
-        textField.clearButtonMode = .always
         textField.text = statusLabel.text
         textField.addTarget(self, action: #selector(self.statusTextChanged), for: .editingChanged)
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -91,7 +91,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     private lazy var infoStackView: UIStackView = { //между картинкой и лейблами
         let srackView = UIStackView()
         srackView.axis = .horizontal
-        srackView.spacing = 20
+        srackView.spacing = 16
         srackView.translatesAutoresizingMaskIntoConstraints = false
         return srackView
     }()
@@ -147,10 +147,12 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     }
     
     @objc private func buttonPressed() {
-        self.addSubview(self.statusTextField)
+       self.addSubview(self.statusTextField)
         
         if self.statusTextField.isHidden {
-            
+            self.addSubview(self.statusTextField)
+            statusTextField.text = nil
+            setStatusButton.setTitle("Set status", for: .normal)
             self.buttonTopConstraint?.isActive = false // Необходимо деактивировать констрейнт, иначе будет конфликт констрейнтов, и Auto Layout не сможет однозначно определить фреймы textField'а.
             
             let topConstraint = self.statusTextField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10)
