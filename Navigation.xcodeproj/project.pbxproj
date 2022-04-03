@@ -15,6 +15,7 @@
 		531CFA8827F496410086CC3D /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531CFA8727F496410086CC3D /* News.swift */; };
 		531CFA8C27F49B660086CC3D /* Setable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531CFA8B27F49B660086CC3D /* Setable.swift */; };
 		533A848227E52CDC00B73359 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533A848127E52CDC00B73359 /* ProfileHeaderView.swift */; };
+		537043CE27F88F4900BD27B8 /* AnimatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537043CD27F88F4900BD27B8 /* AnimatedViewController.swift */; };
 		538E579A27EA70EF001D0F31 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538E579927EA70EF001D0F31 /* LogInViewController.swift */; };
 		53AF60B427E340FB0062472A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AF60B327E340FB0062472A /* InfoViewController.swift */; };
 		53C3565527F78CE60069D325 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C3565427F78CE60069D325 /* PhotosTableViewCell.swift */; };
@@ -37,6 +38,7 @@
 		531CFA8727F496410086CC3D /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		531CFA8B27F49B660086CC3D /* Setable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setable.swift; sourceTree = "<group>"; };
 		533A848127E52CDC00B73359 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		537043CD27F88F4900BD27B8 /* AnimatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedViewController.swift; sourceTree = "<group>"; };
 		538E579927EA70EF001D0F31 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		53AF60B327E340FB0062472A /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		53C3565427F78CE60069D325 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				53EB4F0327E266A0007B0DB0 /* FeedViewController.swift */,
 				53D4E09F27E205EB00C984C8 /* SceneDelegate.swift */,
 				53AF60B327E340FB0062472A /* InfoViewController.swift */,
+				537043CD27F88F4900BD27B8 /* AnimatedViewController.swift */,
 				53EB4F0127E24736007B0DB0 /* TabBarController.swift */,
 				53EB4F0727E2677A007B0DB0 /* PostViewController.swift */,
 				53D4E0A627E205ED00C984C8 /* Assets.xcassets */,
@@ -229,6 +232,7 @@
 				533A848227E52CDC00B73359 /* ProfileHeaderView.swift in Sources */,
 				53EB4F0427E266A0007B0DB0 /* FeedViewController.swift in Sources */,
 				53D4E09E27E205EB00C984C8 /* AppDelegate.swift in Sources */,
+				537043CE27F88F4900BD27B8 /* AnimatedViewController.swift in Sources */,
 				53AF60B427E340FB0062472A /* InfoViewController.swift in Sources */,
 				538E579A27EA70EF001D0F31 /* LogInViewController.swift in Sources */,
 				531CFA8827F496410086CC3D /* News.swift in Sources */,

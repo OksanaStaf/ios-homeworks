@@ -18,7 +18,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         imageView.image = UIImage(named: "cat gentleman")
         imageView.layer.borderWidth = 3.0
         imageView.layer.borderColor = UIColor.white.cgColor
-        imageView.layer.cornerRadius = 60
+        imageView.layer.cornerRadius = 65
         imageView.layer.masksToBounds = false
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true

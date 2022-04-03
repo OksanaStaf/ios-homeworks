@@ -76,7 +76,6 @@ final class PostTableViewCell: UITableViewCell {
         label.setContentHuggingPriority(UILayoutPriority(1), for: .horizontal)
         label.setContentCompressionResistancePriority(UILayoutPriority(250), for: .vertical)
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -89,7 +88,6 @@ final class PostTableViewCell: UITableViewCell {
         label.textColor = .black
         label.setContentCompressionResistancePriority(UILayoutPriority(250), for: .vertical)
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     

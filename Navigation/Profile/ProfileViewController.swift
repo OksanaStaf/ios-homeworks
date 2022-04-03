@@ -76,6 +76,8 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
+   
+    
     private func setupProfileHeaderView() {
         self.view.backgroundColor = .lightGray
         
@@ -89,8 +91,8 @@ final class ProfileViewController: UIViewController {
         NSLayoutConstraint.activate([
             topConstraint, leadingConstraint, trailingConstraint, heightConstraint, widthConstraint, bottomConstraint
         ].compactMap( {$0} ))
-    }
     
+    }
     func updateHeaderViewHeight(for header: UIView?) {//редактируем высоту хэдера
         guard let header = header else { return }
         header.frame.size.height = header.systemLayoutSizeFitting(CGSize(width: view.bounds.width, height: CGFloat(heightConstraint!.constant))).height
@@ -142,6 +144,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 }
+    
     
 func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
