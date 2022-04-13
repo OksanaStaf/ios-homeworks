@@ -8,14 +8,14 @@
 import UIKit
 
 class PhotosTableViewCell: UITableViewCell {
-
+    
     var images = [UIImage]()
-
+    
     private enum Constant {
         static let itemCount: CGFloat = 4
     }
-
-
+    
+    
     private lazy var backView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
@@ -23,7 +23,7 @@ class PhotosTableViewCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
+    
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -31,7 +31,7 @@ class PhotosTableViewCell: UITableViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
-
+    
     private lazy var photosLabel: UILabel = {
         let label = UILabel()
         label.text = "Photos"
@@ -41,9 +41,9 @@ class PhotosTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     private lazy var arrowImage: UIImageView = {
-
+        
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "arrow.right")
         imageView.contentMode = .scaleAspectFit
@@ -51,16 +51,16 @@ class PhotosTableViewCell: UITableViewCell {
         imageView.backgroundColor = .white
         imageView.clipsToBounds = true
         return imageView
-
+        
     }()
-
+    
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 8
         return layout
     }()
-
+    
     private lazy var photoCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -69,16 +69,16 @@ class PhotosTableViewCell: UITableViewCell {
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: "PhotoCell")
         return collectionView
     }()
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setupView() {
         self.backgroundColor = .systemGray6
         self.contentView.addSubview(self.backView)
@@ -91,27 +91,27 @@ class PhotosTableViewCell: UITableViewCell {
             if let image = UIImage(named: "Photo\(i)") {
                 images.append(image)
             }
+        }
     }
-    }
-
+    
     func activateConstraints() {
         let topConstraint = self.backView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16)
         let leadingConstraint = self.backView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor)
         let trailingConstraint = self.backView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
         let bottomConstraint = self.backView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16)
-
+        
         let stackViewTopConstraint = self.stackView.topAnchor.constraint(equalTo: self.backView.topAnchor, constant: 12)
         let stackViewLeadingConstraint = self.stackView.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 12)
         let stackViewTrailingConstraint = self.stackView.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -12)
-
+        
         let imageYAnchor = self.arrowImage.centerYAnchor.constraint(equalTo: self.photosLabel.centerYAnchor)
-
+        
         let photoCollectionViewTopConstraint = self.photoCollectionView.topAnchor.constraint(equalTo: self.stackView.bottomAnchor)
         let photoCollectionViewLeadingConstraint = self.photoCollectionView.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 12)
         let photoCollectionViewTrailingConstraint = self.photoCollectionView.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -12)
         let photoCollectionViewConstraint = self.photoCollectionView.bottomAnchor.constraint(equalTo: self.backView.bottomAnchor, constant: -12)
         let photoCollectionViewHeight = self.photoCollectionView.heightAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.25)
-
+        
         NSLayoutConstraint.activate([
             topConstraint, leadingConstraint, bottomConstraint, trailingConstraint,
             stackViewTopConstraint, stackViewLeadingConstraint, stackViewTrailingConstraint,
@@ -120,8 +120,8 @@ class PhotosTableViewCell: UITableViewCell {
             photoCollectionViewHeight, imageYAnchor
         ])
     }
-
-    func itemSize(for width: CGFloat, with spacing: CGFloat) -> CGSize { // размеры ячейки
+    
+    func itemSize(for width: CGFloat, with spacing: CGFloat) -> CGSize {
         let needWidth = width - 4 * spacing
         let itemWidth = floor(needWidth / Constant.itemCount)
         return CGSize(width: itemWidth, height: itemWidth)
@@ -130,20 +130,20 @@ class PhotosTableViewCell: UITableViewCell {
 
 
 extension PhotosTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
-            let image = images[indexPath.item]
-            cell.photoImageView.image = image
-            return cell
-        }
-
+        let image = images[indexPath.item]
+        cell.photoImageView.image = image
+        return cell
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let spacing = (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing
-            return self.itemSize(for: collectionView.frame.width, with: spacing ?? 0)
-        }
+        let spacing = (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing
+        return self.itemSize(for: collectionView.frame.width, with: spacing ?? 0)
+    }
 }
