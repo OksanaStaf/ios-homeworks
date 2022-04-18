@@ -41,9 +41,4 @@ class PhotoCellCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         self.photoImageView.image = nil
     }
-    
-    func setup(with photo: String) {
-        self.photoImageView.image = UIImage()
-    }
-    
 }

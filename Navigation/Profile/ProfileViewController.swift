@@ -145,6 +145,12 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    //    func tableView(_tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    //        return nil
+    //    }
+    //    func tableView(_tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    //        return 40
+    //    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -156,14 +162,12 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension ProfileViewController: ProfileHeaderViewProtocol {
+    
     func didTapStatusButton(textFieldIsVisible: Bool, completion: @escaping () -> Void) {
-        self.heightConstraint?.constant = textFieldIsVisible ? 250 : 220
-        
-        tableView.beginUpdates()
-        tableView.reloadSections(IndexSet(0..<1), with: .automatic)
-        tableView.endUpdates()
-        
+        // tableView.reloadSections(IndexSet(0..<1), with: .automatic)
         UIView.animate(withDuration: 0.3, delay: 0.0) {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
             self.view.layoutIfNeeded()
         } completion: { _ in
             completion()

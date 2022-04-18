@@ -32,9 +32,30 @@ class PhotosViewController: UIViewController{
         return collectionView
     }()
     
+    //    private lazy var exitButton: UIButton = {
+    //
+    //        let button = UIButton()
+    //        let image = UIImage(systemName: "multiply.circle")
+    //        button.setBackgroundImage(image, for: .normal)
+    //        button.isHidden = true
+    //        button.alpha = 0
+    //        button.translatesAutoresizingMaskIntoConstraints = false
+    //        return button
+    //
+    //    }()
+    
+    // private let tapGestureRecognizer = UITapGestureRecognizer()
+    
+    //    private var topConstraint: NSLayoutConstraint?
+    //    private var leftConstraint: NSLayoutConstraint?
+    //    private var rightConstraint: NSLayoutConstraint?
+    //    private var bottomConstraint: NSLayoutConstraint? //выносим констрейнты
+    
+    //   private var isExpanded = false //расширеное вью или нет
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // self.setupGesture()
         self.view.backgroundColor = .lightGray
         self.view.addSubview(self.collectionView)
         
@@ -54,6 +75,21 @@ class PhotosViewController: UIViewController{
         ])
     }
     
+    //   private func setupGesture() { //описываем ее действие
+    //        self.tapGestureRecognizer.addTarget(self, action: #selector(self.handleTapGesture(_:))) //вызываем селектор
+    //        self.collectionView.addGestureRecognizer(self.tapGestureRecognizer) //наше вью может обрабатывать эту анимацию
+    //        exitButton.addTarget(self, action: #selector(self.didTapButton), for: .touchUpInside)
+    //    }
+    
+    //    @objc private func handleTapGesture(_ gestureRecognizer: UITapGestureRecognizer) { //реализовываем handleTapGesture
+    //        guard self.tapGestureRecognizer === gestureRecognizer else { return } //сравниваем ссылочные объекты по ссылке
+    //        self.exitButton.isHidden = false
+    //        self.isExpanded.toggle()
+    //        self.bottomConstraint?.constant = self.isExpanded ? self.view.bounds. : 140
+    //        self.heightAvatarImageView?.constant = self.isExpanded ? self.view.bounds.height : 140
+    //        NSLayoutConstraint.deactivate([ self.topConstraint, self.leadingAvatarImageView
+    //                                      ].compactMap( {$0} ))
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
@@ -71,7 +107,6 @@ class PhotosViewController: UIViewController{
 extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return images.count
     }
     
@@ -92,7 +127,6 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
     }
     
-    //   думаю надо удалить:
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCellCollectionViewCell
         let image = images[indexPath.item]
@@ -108,5 +142,3 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         sender.view?.removeFromSuperview()
     }
 }
-
-

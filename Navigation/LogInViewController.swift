@@ -32,13 +32,10 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     @objc func kbWillShow(notification: NSNotification) {
         
-        guard let userInfo = notification.userInfo else { return }
-        var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-        
-        var contentInset:UIEdgeInsets = self.scrollView.contentInset
-        contentInset.bottom = keyboardFrame.size.height + 15
-        scrollView.contentInset = contentInset
+        if let kbFrameSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            scrollView.contentOffset = CGPoint(x: 0, y: kbFrameSize.height * 0.1)
+            scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: kbFrameSize.height, right: 0)
+        }
     }
     
     @objc func kbWillHide(notification: NSNotification) {
