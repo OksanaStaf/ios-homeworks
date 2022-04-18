@@ -96,7 +96,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         return srackView
     }()
     
-    private var buttonTopConstraint: NSLayoutConstraint?// может скрыть?
+    private var buttonTopConstraint: NSLayoutConstraint?
     
     private var statusText: String?
     
@@ -125,7 +125,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         let trailingConstraint = self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20) // ограничение правого края
         let imageViewAspectRatio = self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0) //соотношение сторон у картинки 1 к 1
         
-        self.buttonTopConstraint = self.setStatusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 20) //верх кнопки(написать статус где написано, привязываем к низу верхней кнопке-лейблу
+        self.buttonTopConstraint = self.setStatusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 20) //верх кнопки(написать статус где написано, привязываем к низу верхней кнопке-лейблу)
         self.buttonTopConstraint?.priority = UILayoutPriority(rawValue: 999) //делаем опциональной и выводим отдельно, тк она будет меняться при нажатии
         let leadingButtonConstraint = self.setStatusButton.leadingAnchor.constraint(equalTo: self.infoStackView.leadingAnchor) //привязываем к левому краю стека
         let trailingButtonConstraint = self.setStatusButton.trailingAnchor.constraint(equalTo: self.infoStackView.trailingAnchor)
@@ -147,7 +147,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     }
     
     @objc private func buttonPressed() {
-       self.addSubview(self.statusTextField)
+        self.addSubview(self.statusTextField)
         
         if self.statusTextField.isHidden {
             self.addSubview(self.statusTextField)
@@ -165,11 +165,15 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
                 self.buttonTopConstraint,
                 topConstraint, leadingConstraint, trailingConstraint, heightTextFieldConstraint
             ].compactMap({ $0 }))
-
+            
+        } else {
+            if statusTextField.text?.isEmpty ?? true { //проверка на пустоту статуса
+                self.statusTextField.backgroundColor = .systemRed //становится красным поле
+            }
         }
         self.delegate?.didTapStatusButton(textFieldIsVisible: self.statusTextField.isHidden) { [weak self] in self?.statusLabel.text = self?.statusText
             self?.statusTextField.isHidden.toggle()
-
+            
         }
     }
 }

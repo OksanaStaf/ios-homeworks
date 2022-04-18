@@ -13,14 +13,13 @@ final class ProfileViewController: UIViewController {
         let tableView = UITableView (frame: .zero)
         tableView.backgroundColor = .systemGray6
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        //tableView.estimatedRowHeight = 0
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotoCell")
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostCell")
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 300 // 44 попробовать
+        tableView.estimatedRowHeight = 300
         return tableView
         
     }()
@@ -65,18 +64,18 @@ final class ProfileViewController: UIViewController {
     private func setupView() {
         // self.view.backgroundColor = .black
         self.view.addSubview(self.tableView)
-
+        
         let topConstraint = self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor)
         let leadingConstraint = self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
         let trailingConstraint = self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         let bottomConstraint = self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-
+        
         NSLayoutConstraint.activate([
             topConstraint, leadingConstraint, trailingConstraint, bottomConstraint
         ])
     }
     
-   
+    
     
     private func setupProfileHeaderView() {
         self.view.backgroundColor = .lightGray
@@ -91,8 +90,9 @@ final class ProfileViewController: UIViewController {
         NSLayoutConstraint.activate([
             topConstraint, leadingConstraint, trailingConstraint, heightConstraint, widthConstraint, bottomConstraint
         ].compactMap( {$0} ))
-    
+        
     }
+    
     func updateHeaderViewHeight(for header: UIView?) {//редактируем высоту хэдера
         guard let header = header else { return }
         header.frame.size.height = header.systemLayoutSizeFitting(CGSize(width: view.bounds.width, height: CGFloat(heightConstraint!.constant))).height
@@ -123,50 +123,90 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as? PhotosTableViewCell else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
-            return cell
-        }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as? PhotosTableViewCell else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
+                return cell
+            }
             cell.layer.shouldRasterize = true
             cell.layer.rasterizationScale = UIScreen.main.scale
             return cell
-
+            
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? PostTableViewCell else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
                 return cell
             }
-            
-        let post = self.dataSource[indexPath.row - 1]
-        let viewModel = PostTableViewCell.ViewModel(author: post.author, description: post.description,
-                                                    image: post.image, likes: post.likes, views: post.views)
-        cell.setup(with: viewModel)
-        return cell
+            cell.delegate = self
+            let post = self.dataSource[indexPath.row - 1]
+            let viewModel = PostTableViewCell.ViewModel(author: post.author, description: post.description,
+                                                        image: post.image, likes: post.likes, views: post.views)
+            cell.setup(with: viewModel)
+            return cell
+        }
     }
-}
     
+    //    func tableView(_tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    //        return nil
+    //    }
+    //    func tableView(_tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    //        return 40
+    //    }
     
-func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-    if indexPath.row == 0 {
-        let photoVC = PhotosViewController()
-        self.navigationController?.pushViewController(photoVC, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if indexPath.row == 0 {
+            let photoVC = PhotosViewController()
+            self.navigationController?.pushViewController(photoVC, animated: true)
+        }
     }
-}
 }
 
 extension ProfileViewController: ProfileHeaderViewProtocol {
+    
     func didTapStatusButton(textFieldIsVisible: Bool, completion: @escaping () -> Void) {
-        self.heightConstraint?.constant = textFieldIsVisible ? 250 : 220
-        
-        tableView.beginUpdates()
-        tableView.reloadSections(IndexSet(0..<1), with: .automatic)
-        tableView.endUpdates()
-        
+        // tableView.reloadSections(IndexSet(0..<1), with: .automatic)
         UIView.animate(withDuration: 0.3, delay: 0.0) {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
             self.view.layoutIfNeeded()
         } completion: { _ in
             completion()
         }
+    }
+}
+
+extension ProfileViewController: PostTableViewCellProtocol {
+    
+    func likePlus(cell: PostTableViewCell) {
+        guard let index = self.tableView.indexPath(for: cell)?.row else { return }
+        let indexPath = IndexPath(row: index, section: 0)
+        self.dataSource[indexPath.row - 1].likes += 1
+        self.tableView.reloadRows(at: [indexPath], with: .fade)
+    }
+    
+    func postPlus(cell: PostTableViewCell) {
+        let largePostView = PostView()
+        guard let index = self.tableView.indexPath(for: cell)?.row else { return }
+        let indexPath = IndexPath(row: index, section: 0)
+        let post = self.dataSource[indexPath.row - 1]
+        
+        let viewModel = PostView.ViewModel(
+            author: post.author, description: post.description, image: post.image, likes: post.likes, views: post.views)
+        
+        largePostView.setup(with: viewModel)
+        self.view.addSubview(largePostView)
+        
+        largePostView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            largePostView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            largePostView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            largePostView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            largePostView.topAnchor.constraint(equalTo: view.topAnchor)
+        ])
+        
+        self.dataSource[indexPath.row - 1].views += 1
+        self.tableView.reloadRows(at: [indexPath], with: .fade)
+        
     }
 }

@@ -11,12 +11,10 @@ class PhotoCellCollectionViewCell: UICollectionViewCell {
     
     var photoImageView: UIImageView = {
         let imageView = UIImageView()
-        //imageView.layer.cornerRadius = 6
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .white
         imageView.clipsToBounds = true
-        
         return imageView
     }()
     
@@ -43,9 +41,4 @@ class PhotoCellCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         self.photoImageView.image = nil
     }
-    
-    func setup(with photo: String) {
-        self.photoImageView.image = UIImage()
-    }
-    
 }

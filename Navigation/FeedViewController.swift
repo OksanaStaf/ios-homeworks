@@ -57,7 +57,6 @@ class FeedViewController: UIViewController {
         srackView.distribution = .fillEqually //высота кнопок одинаковая
         srackView.spacing = 10 //зазор между кнопками
         srackView.translatesAutoresizingMaskIntoConstraints = false
-        
         return srackView
     }()
     
