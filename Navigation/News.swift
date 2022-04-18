@@ -10,8 +10,8 @@ class News: Decodable {
 
     struct Post: Decodable {
         let author, description, image: String
-        var likes: Int
-        var views: Int
+        let likes: Int
+        let views: Int
 
         enum CodingKeys: String, CodingKey {
                 case author, description, image, likes, views
