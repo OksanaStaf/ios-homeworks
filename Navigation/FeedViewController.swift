@@ -15,18 +15,6 @@ class FeedViewController: UIViewController {
     
     let lastPost = Post.init(title: "Пост")
     
-    /* let transitionButton: UIButton = {
-     let button = UIButton(type: .system)
-     button.layer.cornerRadius = 12
-     button.clipsToBounds = true
-     button.backgroundColor = .systemMint
-     button.setTitle("Посмотреть пост", for: .normal)
-     button.setTitleColor(.black, for: .normal)
-     button.translatesAutoresizingMaskIntoConstraints = false
-     return button
-     }()
-     */
-    
     let oneButton: UIButton = {
         let button = UIButton(type: .system)
         button.layer.cornerRadius = 12
@@ -54,8 +42,8 @@ class FeedViewController: UIViewController {
     private lazy var buttonStackView: UIStackView = {
         let srackView = UIStackView()
         srackView.axis = .vertical
-        srackView.distribution = .fillEqually //высота кнопок одинаковая
-        srackView.spacing = 10 //зазор между кнопками
+        srackView.distribution = .fillEqually
+        srackView.spacing = 10
         srackView.translatesAutoresizingMaskIntoConstraints = false
         return srackView
     }()
@@ -79,8 +67,8 @@ class FeedViewController: UIViewController {
         let onePositionStackViewContraints = buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         let twoPositionStackViewContraints = buttonStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         
-        let leadingOneButtonContransit = self.oneButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20) //40
-        let trailingOneButtonContransit = self.oneButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20) //-40
+        let leadingOneButtonContransit = self.oneButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20)
+        let trailingOneButtonContransit = self.oneButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20)
         
         let leadingTwoButtonContransit = self.twoButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20)
         let trailingTwoButtonContransit = self.twoButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20)

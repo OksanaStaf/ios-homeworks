@@ -9,7 +9,7 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
-    private lazy var tableView: UITableView = { //таблица
+    private lazy var tableView: UITableView = {
         let tableView = UITableView (frame: .zero)
         tableView.backgroundColor = .systemGray6
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -31,7 +31,7 @@ final class ProfileViewController: UIViewController {
         return view
     }()
     
-    private var heightConstraint: NSLayoutConstraint? //хедера высота
+    private var heightConstraint: NSLayoutConstraint?
     
     private lazy var jsonDecoder: JSONDecoder = {
         return JSONDecoder()
@@ -62,7 +62,6 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupView() {
-        // self.view.backgroundColor = .black
         self.view.addSubview(self.tableView)
         
         let topConstraint = self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor)
@@ -93,13 +92,13 @@ final class ProfileViewController: UIViewController {
         
     }
     
-    func updateHeaderViewHeight(for header: UIView?) {//редактируем высоту хэдера
+    func updateHeaderViewHeight(for header: UIView?) {
         guard let header = header else { return }
         header.frame.size.height = header.systemLayoutSizeFitting(CGSize(width: view.bounds.width, height: CGFloat(heightConstraint!.constant))).height
     }
     
     private func fetchPosts(complection: @escaping ([News.Post]) -> Void) {
-        if let path = Bundle.main.path(forResource: "news", ofType: "json") { //используем json
+        if let path = Bundle.main.path(forResource: "news", ofType: "json") {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped)
                 let news = try self.jsonDecoder.decode(News.self, from: data)
@@ -115,7 +114,6 @@ final class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
-    //Класс ProfileViewController должен реализовать протоколы UITableViewDelegate и UITableViewDataSource. Применить extension инструмент.
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count + 1
@@ -145,13 +143,6 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    //    func tableView(_tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    //        return nil
-    //    }
-    //    func tableView(_tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    //        return 40
-    //    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 0 {
@@ -164,7 +155,6 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 extension ProfileViewController: ProfileHeaderViewProtocol {
     
     func didTapStatusButton(textFieldIsVisible: Bool, completion: @escaping () -> Void) {
-        // tableView.reloadSections(IndexSet(0..<1), with: .automatic)
         UIView.animate(withDuration: 0.3, delay: 0.0) {
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
