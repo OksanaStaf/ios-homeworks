@@ -31,31 +31,8 @@ class PhotosViewController: UIViewController{
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    
-    //    private lazy var exitButton: UIButton = {
-    //
-    //        let button = UIButton()
-    //        let image = UIImage(systemName: "multiply.circle")
-    //        button.setBackgroundImage(image, for: .normal)
-    //        button.isHidden = true
-    //        button.alpha = 0
-    //        button.translatesAutoresizingMaskIntoConstraints = false
-    //        return button
-    //
-    //    }()
-    
-    // private let tapGestureRecognizer = UITapGestureRecognizer()
-    
-    //    private var topConstraint: NSLayoutConstraint?
-    //    private var leftConstraint: NSLayoutConstraint?
-    //    private var rightConstraint: NSLayoutConstraint?
-    //    private var bottomConstraint: NSLayoutConstraint? //выносим констрейнты
-    
-    //   private var isExpanded = false //расширеное вью или нет
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // self.setupGesture()
         self.view.backgroundColor = .lightGray
         self.view.addSubview(self.collectionView)
         
@@ -74,21 +51,6 @@ class PhotosViewController: UIViewController{
             topConstraint, leftConstraint, rightConstraint, bottomConstraint
         ])
     }
-    
-    //   private func setupGesture() { //описываем ее действие
-    //        self.tapGestureRecognizer.addTarget(self, action: #selector(self.handleTapGesture(_:))) //вызываем селектор
-    //        self.collectionView.addGestureRecognizer(self.tapGestureRecognizer) //наше вью может обрабатывать эту анимацию
-    //        exitButton.addTarget(self, action: #selector(self.didTapButton), for: .touchUpInside)
-    //    }
-    
-    //    @objc private func handleTapGesture(_ gestureRecognizer: UITapGestureRecognizer) { //реализовываем handleTapGesture
-    //        guard self.tapGestureRecognizer === gestureRecognizer else { return } //сравниваем ссылочные объекты по ссылке
-    //        self.exitButton.isHidden = false
-    //        self.isExpanded.toggle()
-    //        self.bottomConstraint?.constant = self.isExpanded ? self.view.bounds. : 140
-    //        self.heightAvatarImageView?.constant = self.isExpanded ? self.view.bounds.height : 140
-    //        NSLayoutConstraint.deactivate([ self.topConstraint, self.leadingAvatarImageView
-    //                                      ].compactMap( {$0} ))
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -128,17 +90,32 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCellCollectionViewCell
-        let image = images[indexPath.item]
-        cell.photoImageView.image = image
-        cell.frame = self.view.bounds
-        cell.contentMode = .scaleAspectFit
-        cell.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissImage))
-        cell.addGestureRecognizer(tap)
+        let cell = OpenPhotoCell()
+        cell.delegate = self
         self.view.addSubview(cell)
+        cell.imageOpenCell.image = images[indexPath.item]
+        navigationController?.navigationBar.isHidden = true
+        
+        NSLayoutConstraint.activate([
+            cell.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            cell.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            cell.topAnchor.constraint(equalTo: view.topAnchor),
+            cell.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        UIView.animate(withDuration: 0.1, animations: {
+            self.view.layoutIfNeeded()
+        }) { _ in
+            UIView.animate(withDuration: 0.3) {
+                cell.buttonExit.alpha = 1
+                cell.backgroundColor = .black.withAlphaComponent(0.8)
+            }
+        }
     }
-    @objc func dismissImage(_ sender: UITapGestureRecognizer) {
-        sender.view?.removeFromSuperview()
+}
+
+extension PhotosViewController: OpenImageDelegate {
+    func pressedButton(view: OpenPhotoCell) {
+        view.removeFromSuperview()
+        navigationController?.navigationBar.isHidden = false
     }
 }
