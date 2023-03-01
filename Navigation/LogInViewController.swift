@@ -17,14 +17,12 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white //фон белый по заданию
-        self.navigationController?.navigationBar.isHidden = true //скрываем NavigationBar по заданию
+        self.view.backgroundColor = .white
+        self.navigationController?.navigationBar.isHidden = true
         self.setupView()
         self.tapGesture()
         self.loginTextField.delegate = self
-        //print("введен логин") //проверяем отладку
         self.passwordTextField.delegate = self
-        // print("введен пароль") //проверяем отладку
         
         NotificationCenter.default.addObserver(self, selector: #selector(LogInViewController.kbWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(LogInViewController.kbWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -71,10 +69,10 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return stackView
     }()
     
-    private lazy var loginTextField: UITextField = { //текстфилд с логином
+    private lazy var loginTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .systemGray6
-        textField.placeholder = "Email or phone"//опечатка на фото в дз
+        textField.placeholder = "Email or phone"
         textField.font = UIFont.systemFont(ofSize: 16)
         let leftView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 15.0, height: 2.0))
         textField.leftView = leftView
@@ -88,15 +86,10 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         textField.clearButtonMode = .unlessEditing
         textField.clearButtonMode = .always
         textField.translatesAutoresizingMaskIntoConstraints = false
-        //        if textField.text?.isEmpty ?? true { //проверка на пустоту
-        //               print("login is empty")
-        //           } else {
-        //               print("login has some text")
-        //           }
         return textField
     }()
     
-    private lazy var passwordTextField: UITextField = { //текстфилд с паролем
+    private lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .systemGray6
         textField.placeholder = "Password"
@@ -112,13 +105,8 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         textField.clearButtonMode = .whileEditing
         textField.clearButtonMode = .unlessEditing
         textField.clearButtonMode = .always
-        textField.isSecureTextEntry = true //скрываем пароль
+        textField.isSecureTextEntry = true
         textField.translatesAutoresizingMaskIntoConstraints = false
-        //        if textField.text?.isEmpty ?? true { //проверка на пустоту
-        //            print("password is empty")
-        //           } else {
-        //               print("password has some text")
-        //           }
         return textField
     }()
     
@@ -130,16 +118,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         let image = UIImage(named: "blue_pixel")
         button.setBackgroundImage(image, for: .normal)
         button.backgroundColor = UIColor(named: "Color")
-        
-        //        if button.isSelected {
-        //            button.alpha = 0.8
-        //        } else if button.isHighlighted {
-        //            button.alpha = 0.8
-        //        } else if !button.isEnabled {
-        //            button.alpha = 0.8
-        //        } else {
-        //            button.alpha = 1
-        //        }
         button.addTarget(self, action: #selector(self.didTapLogInButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -198,7 +176,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    private func tapGesture() { //сворачиваем клавиатуру
+    private func tapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(view.endEditing))
         self.view.addGestureRecognizer(tapGesture)
     }
@@ -209,13 +187,13 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     }
     
     func validatePassword(userPassword: String) -> Bool {
-        if userPassword.count < 6 { //проверка на количество символов
+        if userPassword.count < 6 {
             print("Не соотвествует количеству")
             return false
         }
         return true
     }
-    func validateEmail(email: String) -> Bool {  //Реализовать проверку валидности email адреса
+    func validateEmail(email: String) -> Bool {
         let emailRegEx = "(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"+"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"+"x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"+"z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"+"]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"+"9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"+"-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
         
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
@@ -256,21 +234,19 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             self.warningLabel.isHidden = true
         }
         
-        if loginTextField.text?.isEmpty ?? true { //проверка на пустоту логина
-            self.loginTextField.backgroundColor = .systemRed //становится красным поле
-            //print("login is empty")
+        if loginTextField.text?.isEmpty ?? true {
+            self.loginTextField.backgroundColor = .systemRed
         }
         
-        if passwordTextField.text?.isEmpty ?? true { //проверка на пустоту пароля
-            self.passwordTextField.backgroundColor = .systemRed //становится красным поле
-            // print("password is empty")
+        if passwordTextField.text?.isEmpty ?? true {
+            self.passwordTextField.backgroundColor = .systemRed
         }
         
         if self.loginTextField.text == "oksanaStafeeva@yandex.ru" && passwordTextField.text == "123456789" {
             
             let profileVC = ProfileViewController()
             self.navigationController?.pushViewController(profileVC, animated: true)
-        } else { // В случае ввода некорректных данных выбрасывать UIAlertController с предупреждением:
+        } else {
             let alert = UIAlertController(title: "Внимание!", message: "Введите логин или пароль еще раз.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
                 NSLog("The \"OK\" alert occured.")
